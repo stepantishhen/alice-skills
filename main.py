@@ -3,10 +3,8 @@ import os
 import random
 
 from flask import Flask, request
-from flask_ngrok import run_with_ngrok
 
 app = Flask(__name__)
-run_with_ngrok(app)
 
 player_class = {
     'rogue': {
@@ -177,7 +175,7 @@ def handle_dialog(req, res):
     user_id = req['session']['user_id']
     if req['session']['new']:
         res['response']['text'] = 'Привет, мы тут играем в игру. Назови свое имя'
-        session_state['user_id'] = {
+        session_state[user_id] = {
             'state': 1
         }
         return
@@ -194,4 +192,4 @@ session_state = {}
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='127.0.0.1', port=port)
